@@ -16,32 +16,37 @@
 
     <!-- formulario -->
     <div class="container-fluid row">
-        <form class="col-4 p-4">
+        <form class="col-4 p-4" method="POST">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombreInput" name="nombre">
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" id="apellidoInput" name="nombre">
+                <input type="text" class="form-control" id="apellidoInput" name="apellido">
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Cedula</label>
-                <input type="text" class="form-control" id="cedulaInput" name="nombre">
+                <input type="text" class="form-control" id="cedulaInput" name="cedula">
             </div>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Correo</label>
-                <input type="text" class="form-control" id="correoInput" name="nombre">
+                <input type="text" class="form-control" id="correoInput" name="correo">
             </div>
 
+            <?php
+            include 'model/conexion.php';
+            include 'controller/registro_persona.php'
+            ?>
+
             <div class="">
-                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="submit" class="btn btn-primary" name="btnRegistrar">Registrar</button>
             </div>
 
         </form>
 
         <div class="col-8 p-4">
-
+            <!-- tabla para mostar la informacion almacenada -->
             <table class="table">
                 <!-- cambiar color despues -->
                 <thead class="bg-primary">
@@ -57,26 +62,27 @@
                 </thead>
                 <tbody>
                     <?php
-
-                    include 'controller/conexion.php';
+                    include 'model/conexion.php';
 
                     $sql = $conexion->query('select * from estudiante'); //Le asignamos a $sql los datos que traemos de la db
-                    while ($datos = $sql->fetch_object())
+                    while ($datos = $sql->fetch_object()) {
                     ?>
-                    
-                    <tr>
-                        <th scope="row"><?= $datos->id_estudiante?></th>
-                        <td><?= $datos->nombre ?></td>
-                        <td><?= $datos->apellido ?></td>
-                        <td><?= $datos->cedula ?></td>
-                        <td><?= $datos->correo ?></td>
-                        <td><?= $datos->fecha_ingreso ?></td>
-                        <td>
-                            <a class="btn btn-info p-1" href="#">Editar</a>
-                            <a class="btn btn-danger p-1" href="#">Eliminar</a>
-                        </td>
-                    </tr>
+
+                        <tr>
+                            <th scope="row"><?= $datos->idEstudiante ?></th>
+                            <td><?= $datos->nombre ?></td>
+                            <td><?= $datos->apellido ?></td>
+                            <td><?= $datos->cedula ?></td>
+                            <td><?= $datos->correo ?></td>
+                            <td><?= $datos->fechaIngreso ?></td>
+                            <td>
+                                <a class="btn btn-info p-1" href="#" >Editar</a>
+                                <a class="btn btn-danger p-1" href="#" onclick="borrar()">Eliminar</a>
+                            </td>
+                        </tr>
+
                     <?php
+                    }
                     ?>
                 </tbody>
             </table>
@@ -87,6 +93,11 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+        function borrar(){
+        }
+
+    </script>
 </body>
 
 </html>
