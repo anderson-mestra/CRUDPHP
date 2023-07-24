@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CRUD PHP-MySQL-BOOTSTRAP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+    </style>
 </head>
 
 <body>
@@ -14,9 +18,10 @@
     <h1 class="text-center p-2">CRUD PHP</h1>
 
 
-    <!-- formulario -->
+    <!-- formulario de registro -->
     <div class="container-fluid row">
         <form class="col-4 p-4" method="POST">
+            <h3 class="font-weight-bold">Registro de estudiante</h3>
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombreInput" name="nombre">
@@ -36,11 +41,11 @@
 
             <?php
             include 'model/conexion.php';
-            include 'controller/registro_persona.php'
+            include 'controller/registro_persona.php';
             ?>
 
             <div class="">
-                <button type="submit" class="btn btn-primary" name="btnRegistrar">Registrar</button>
+                <button type="submit" class="btn btn-primary mt-3" name="btnRegistrar" value="ok">Registrar</button>
             </div>
 
         </form>
@@ -64,8 +69,8 @@
                     <?php
                     include 'model/conexion.php';
 
-                    $sql = $conexion->query('select * from estudiante'); //Le asignamos a $sql los datos que traemos de la db
-                    while ($datos = $sql->fetch_object()) {
+                    $sql = $conexion->query('select * from estudiante'); //Le asignamos a $sql los datos que traemos de la db en forma de objeto
+                    while ($datos = $sql->fetch_object()) {  // le asignamos a datos array con los valores de la consulta usando fetch_object
                     ?>
 
                         <tr>
@@ -76,8 +81,8 @@
                             <td><?= $datos->correo ?></td>
                             <td><?= $datos->fechaIngreso ?></td>
                             <td>
-                                <a class="btn btn-info p-1" href="#" >Editar</a>
-                                <a class="btn btn-danger p-1" href="#" onclick="borrar()">Eliminar</a>
+                                <a class="btn btn-info p-1" href="modificarElemento.php?id=<?= $datos->idEstudiante ?>">Editar</a>
+                                <a class="btn btn-danger p-1" href="controller/eliminarElemento.php?id=<?= $datos->idEstudiante ?>" onclick="return opcion()">Eliminar</a>
                             </td>
                         </tr>
 
@@ -90,13 +95,16 @@
 
     </div>
 
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
     <script>
-        function borrar(){
-        }
-
+        function opcion() {
+            let resultado = window.confirm('Esta seguro de borrar este registro?');
+            if (resultado === true) {
+                alert("El registro ha sido eliminado");
+                return true;
+            } else
+                return false;
+        };
     </script>
 </body>
 
