@@ -70,7 +70,7 @@
                     include 'model/conexion.php';
 
                     $sql = $conexion->query('select * from estudiante'); //Le asignamos a $sql los datos que traemos de la db en forma de objeto
-                    while ($datos = $sql->fetch_object()) {  // le asignamos a datos array con los valores de la consulta usando fetch_object
+                    while ($datos = $sql->fetch_object()) { 
                     ?>
 
                         <tr>
